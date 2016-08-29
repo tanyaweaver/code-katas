@@ -73,8 +73,6 @@ class PriorityQ(object):
         else:
             self._bh = BinaryHeap()
 
-
-
     def pop(self):
         """Removes and returns the most important item from the queue."""
         return self._bh.pop().value

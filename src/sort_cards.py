@@ -10,6 +10,7 @@ RANKS = {"A": 1, "T": 10, "J": 11, "Q": 12, "K": 13}
 
 
 def sort_cards(cards):
+    """Sorts shuffled list of cards, sorted by rank."""
     card_rank_list = []
     for card in cards:
         if card in list('23456789'):

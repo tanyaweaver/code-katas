@@ -7,11 +7,6 @@
 
 # from priority_q import Item
 
-
-# def test_display_values():
-#     pq = PQ([(1, 2), (3, 4), (5, 6)])
-#     assert pq.display_values() == [2, 4, 6]
-
 # RANK_VALUE = [
 #     ((1, 1),),
 #     ((1, 1), (1, 2)),
@@ -42,7 +37,7 @@
 
 # INIT_HIGHEST_RANK = zip(RANK_VALUE, H_RANK)
 
-# L_RANK = [(1, 1), (1, 2), (1, 1), (1, 1), (8, 1), (3, 3), (1, 1)]
+# L_RANK = [(1, 1), (1, 2), (1, 1), (2, 3), (8, 1), (5, 1), (1, 1)]
 
 # INIT_LOWEST_RANK = zip(RANK_VALUE, L_RANK)
 
