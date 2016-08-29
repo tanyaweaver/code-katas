@@ -19,3 +19,7 @@ $parenthetics(string)
 $python sort_cards.py
 $sort_cards(list('39A5T824Q7J6K'))  --> list('A23456789TJQK')
 
+### 2 Solutions:
+* sort_cards.py - using priority queue
+* sort_cards_no_pq - without  priority queue
+
