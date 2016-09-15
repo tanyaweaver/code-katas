@@ -41,10 +41,10 @@ def calculate_distance(point1, point2):
     return radius_earth * c / 1.60934  # convert km to miles
 
 
-def create_airport_coordinates_dict(data):
+def create_city_coordinates_dict(data):
     city_coord_dict = {}
     for city_dict in data:
-        city_coord_dict[city_dict['airport']] = city_dict['lat_lon']
+        city_coord_dict.setdefault(city_dict['city'], city_dict['lat_lon'])
     return city_coord_dict
 
 
@@ -54,9 +54,8 @@ def short_json(data):
         short_json.append(
             {
                 'city': city_dict['city'],
-                'airport': city_dict['airport'],
                 'lat_lon': city_dict['lat_lon'],
-                'destination_airports': city_dict['destination_airports']
+                'destination_cities': city_dict['destination_cities']
             }
         )
     return short_json
@@ -64,19 +63,19 @@ def short_json(data):
 SHORT_JSON = short_json(DATA)
 
 
-def all_connections(data, airport_coord_dict):  # edges for the future graph
+def all_connections(data, city_coord_dict):  # edges for the future graph
     edges = []
     for city_dict in data:
-        destinations = city_dict['destination_airports']
+        destinations = city_dict['destination_cities']
         for destination in destinations:
             try:
                 distance_from_origin = calculate_distance(
-                    airport_coord_dict[city_dict['airport']],  # origin airport
-                    airport_coord_dict[destination]  # destination airport
+                    city_coord_dict[city_dict['city']],  # origin airport
+                    city_coord_dict[destination]  # destination airport
                     )
            
                 edges.append(
-                    (city_dict['airport'], destination, distance_from_origin)
+                    (city_dict['city'], destination, distance_from_origin)
                 )
             except KeyError:
                 pass
@@ -95,34 +94,33 @@ def create_airports_graph(edges):
 
 
 EDGES = all_connections(
-    SHORT_JSON, create_airport_coordinates_dict(SHORT_JSON))
+    SHORT_JSON, create_city_coordinates_dict(SHORT_JSON))
 
 GRAPH = create_airports_graph(EDGES)
 
 
-def find_airport_path(airport1, airport2):
-    path, distance = GRAPH.shortest_path_dijkstras(airport1, airport2)
+def path(city1, city2):
+    path, distance = GRAPH.shortest_path_dijkstras(city1, city2)
     print(path, round(distance, 1), 'mi')
 
 
-def airport_list(data):
-    airport_list = []
+def city_list(data):
+    city_list = []
     for city_dict in data:
-        airport_list.append(city_dict['airport'])
-    return sorted(airport_list)
+        city_list.append(city_dict['city'])
+    return sorted(city_list)
 
 if __name__ == '__main__':
-    print('airport_list: ', airport_list(SHORT_JSON)[:100])
-    print('type: find_airport_path(airport1, airport2) to find path and distance')
-    print(EDGES[0])
+    print('Type: path(city1, city2) to find path and distance between 2 cities')
+    # print(EDGES[0])
     #city_list(SHORT_JSON)
-    #pprint(SHORT_JSON)
+    #pprint(SHORT_JSON[0])
     #pprint (AIRPORT_COORD_DICT)
     #pprint (len(CITY_COORD_DICT.keys()))
     # for city in DATA:
     #     if city['city'].startswith('Washington'):
     #         print(city['city'], city['airport'], city['lat_lon']) 
-    #print(DATA[0], DATA[1])
+    #print(DATA[0])
     #print(calculate_distance(DATA[0]['lat_lon'], DATA[1]['lat_lon']))
     #print(list_distance_to_airport(DATA, AIRPORT_COORD_DICT))
     #pprint(SHORT_JSON[0])
@@ -133,4 +131,4 @@ if __name__ == '__main__':
     #     if city['airport'].startswith('Prince'):
     #         print(city['city'], city['airport'])
     # print('nope', counter)
-    print(EDGES[0], EDGES[1], EDGES[2], EDGES[3])
+    # print(EDGES[0], EDGES[1], EDGES[2], EDGES[3])
