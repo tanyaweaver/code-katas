@@ -4,6 +4,7 @@
 from __future__ import unicode_literals, division
 from collections import deque
 
+
 class Graph(object):
     """Defining class Graph."""
     def __init__(self, iterable=None):
@@ -40,9 +41,9 @@ class Graph(object):
         self._dict.setdefault(n2, [])
         for tup in new_node:
             if n2 == tup[0]:
-                break
-            else:
-                new_node.append((n2, weight))
+                raise ValueError('This edge already exists.')
+        else:
+            new_node.append((n2, weight))
 
     def nodes(self):
         """Show all nodes."""
@@ -166,9 +167,8 @@ class Graph(object):
         Find the shortest path between two nodes in the graph
         with weighted edges,
         """
-        if not self.has_node(start) and not self.has_node(end):
-            raise ValueError('Node(s) is not in the graph')
-        #import pdb; pdb.set_trace()
+        if not self.has_node(start) or not self.has_node(end):
+            raise ValueError('The city is not in the list')
         tentative_cost = {
             x: {'cost': float('inf'), 'path': None} for x in self._dict.keys()
         }
@@ -180,9 +180,9 @@ class Graph(object):
         while len(pending_list) > 0 and end not in visited_list:
             for n in sorted(
                     self.neighbors_weight(current_node),
-                    key=lambda x: x[1]):
-                if n[0] not in visited_list:
-                    pending_list.append(n[0])
+                    key=lambda x: x[1]
+            ):
+                if n[0] not in visited_list: pending_list.append(n[0])
                 if tentative_cost[n[0]]['cost'] >\
                         tentative_cost[current_node]['cost'] + n[1]:
                     tentative_cost[n[0]]['cost'] =\
