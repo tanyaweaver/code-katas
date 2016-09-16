@@ -6,7 +6,7 @@ import json
 from graph import Graph
 
 
-with open('cities_with_airports.json') as data_file:
+with open('assets/cities_with_airports.json') as data_file:
     DATA = json.load(data_file)
 
 
