@@ -53,12 +53,12 @@ def short_json(data):
     Clean up the data from the original json file.
     """
     short_json = []
-    for city_dict in data:
+    for city in data:
         short_json.append(
             {
-                'city': city_dict['city'],
-                'lat_lon': city_dict['lat_lon'],
-                'destination_cities': city_dict['destination_cities']
+                'city': city['city'],
+                'lat_lon': city['lat_lon'],
+                'destination_cities': city['destination_cities']
             }
         )
     return short_json
@@ -70,23 +70,23 @@ def all_connections(data, city_coord_dict):
     These are used to add edges for the graph.
     """
     edges = []
-    for city_dict in data:
-        destinations = city_dict['destination_cities']
+    for city in data:
+        destinations = city['destination_cities']
         for destination in destinations:
             try:
                 distance_from_origin = calculate_distance(
-                    city_coord_dict[city_dict['city']],  # origin airport
+                    city_coord_dict[city['city']],  # origin airport
                     city_coord_dict[destination]  # destination airport
                     )
                 edges.append(
-                    (city_dict['city'], destination, distance_from_origin)
+                    (city['city'], destination, distance_from_origin)
                 )
             except KeyError:
                 pass
     return edges
 
 
-def create_airports_graph(edges):
+def create_city_graph(edges):
     """
     Create a graph where nodes=<cities> and
     weighted edges=<connections with distances>.
@@ -96,26 +96,30 @@ def create_airports_graph(edges):
         try:
             graph.add_edge(edge[0], edge[1], edge[2])
         except ValueError:
+
             pass
     return graph
 
 SHORT_JSON = short_json(DATA)
 
+CITY_COOR_DICT = create_city_coordinates_dict(DATA)
+
 EDGES = all_connections(
-    SHORT_JSON, create_city_coordinates_dict(SHORT_JSON))
+    SHORT_JSON, CITY_COOR_DICT)
 
-GRAPH = create_airports_graph(EDGES)
+GRAPH = create_city_graph(EDGES)
 
 
-def path(city1, city2):
+def path(city1, city2, graph=GRAPH):
     """
     Find the shortest path between 2 given cities using
     Dijkstra's algorithm.
     """
-    path, distance = GRAPH.shortest_path_dijkstras(city1, city2)
-    print(path, round(distance, 1), 'mi')
+    path, distance = graph.shortest_path_dijkstras(city1, city2)
+    print(path, 'traveled distanse is {} mi'.format(round(distance, 1)))
+    return(path, round(distance, 1))
 
 
 if __name__ == '__main__':
-    print('Type: path(city1, city2) to find path and distance'
+    print('Type <path(city1, city2)> to find path and distance'
           ' between 2 cities')

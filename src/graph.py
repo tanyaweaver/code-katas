@@ -167,8 +167,10 @@ class Graph(object):
         Find the shortest path between two nodes in the graph
         with weighted edges,
         """
-        if not self.has_node(start) or not self.has_node(end):
-            raise ValueError('The city is not in the list')
+        if not self.has_node(start):
+            raise ValueError('The city {} is not in the list'.format(start))
+        if not self.has_node(end):
+            raise ValueError('The city {} is not in the list'.format(end))
         tentative_cost = {
             x: {'cost': float('inf'), 'path': None} for x in self._dict.keys()
         }

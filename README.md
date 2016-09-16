@@ -1,5 +1,5 @@
 # code-katas
-## Proper-parenthetics
+## kata 1: Proper-parenthetics
 
 ###Python function takes a unicode string (text) as input and returns one of three possible values:
 
@@ -12,7 +12,7 @@
 $python parenthetics.py
 $parenthetics(string)
 ```
-## Sort deck of cards
+## kata 2: Sort deck of cards
 ### Python function sorts shuffled list of cards, sorted by rank.
 ### To run:
 ```
@@ -23,3 +23,15 @@ $sort_cards(list('39A5T824Q7J6K'))  --> list('A23456789TJQK')
 * sort_cards.py - using priority queue
 * sort_cards_no_pq - without  priority queue
 
+## kata 3: Sort deck of cards
+### Given a starting city and an ending city, wilpython function returns:
+* the shortest path between the two cities (including the two cities)
+    - the shortest path is based on Dijkstra's algorithm
+* the distance traveled between them
+* appropriately handles the situation where no path exists
+
+### To run:
+```
+$python src/flight_paths.py
+$path('Moscow', 'London') # => ['Moscow', 'London'] traveled distanse is 1560.2 mi
+```
