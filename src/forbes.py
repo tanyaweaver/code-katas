@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf -8 -*-
 
-from __future__ import unicode_literals, division
+from __future__ import unicode_literals
 import json
 from bst import Bst
 import requests
@@ -19,8 +19,7 @@ def create_age_dictionary(data):
     """
     age_dict = {}
     for person in data:
-        if person['age'] > 0:
-            age_dict.setdefault(person['age'], []).append(person)
+        age_dict.setdefault(person['age'], []).append(person)
     return age_dict
 
 AGE_DICT = create_age_dictionary(DATA)
@@ -32,7 +31,8 @@ def create_binary_tree(age_dict):
     """
     bst = Bst()
     for key in age_dict:
-        bst.insert(key)
+        if key > 0:
+            bst.insert(key)
     return bst
 
 FORBES_BST = create_binary_tree(AGE_DICT)
@@ -64,16 +64,11 @@ def youngest(bst):
     return pending.value
 
 
-def internet_scraper(sym):
-    response = requests.get('http://dev.markitondemand.com/'
-                            'Api/v2/Quote/json?symbol=' + sym)
-    if response.status_code == 200:
-        entries = {key: value for key, value in response.json().items()}
-    print('Current stock price from Nasdaq: ')
-    print(entries['Name'], entries['LastPrice'])
-
-
 def ages_of_two(age):
+    """
+    Return list of oldest people under specific age
+    and list of youngest people. People in each list are of the same age.
+    """
     old = oldest_under_80(FORBES_BST, age)
     young = youngest(FORBES_BST)
     list_old, list_young = [], []
@@ -81,6 +76,7 @@ def ages_of_two(age):
         list_old.append((x['name'], x['net_worth (USD)'], x['source']))
     for x in AGE_DICT[young]:
         list_young.append((x['name'], x['net_worth (USD)'], x['source']))
+
     print('Forbes 40 billionaires info.')
     print('Oldest under {} (age {}):'.format(age, old))
     for x in list_old:
@@ -89,6 +85,19 @@ def ages_of_two(age):
     for x in list_young:
         print(str(x[0]) + ',', 'net worth: ', x[1], 'USD,', x[2])
     return list_old, list_young
+
+
+def internet_scraper(sym):
+    """
+    Return stock price for given stock symbol for a company.
+    API used: dev.marketondemand.com.
+    """
+    response = requests.get('http://dev.markitondemand.com/'
+                            'Api/v2/Quote/json?symbol=' + sym)
+    if response.status_code == 200:
+        entries = {key: value for key, value in response.json().items()}
+    print('Current stock price from Nasdaq: ')
+    print(entries['Name'], entries['LastPrice'])
 
 
 if __name__ == '__main__':

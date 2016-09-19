@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf -8 -*-
 
-from __future__ import unicode_literals, division
+from __future__ import unicode_literals
 from forbes import (
     DATA, AGE_DICT, FORBES_BST,
     oldest_under_80, youngest)
@@ -35,7 +35,8 @@ def test_create_binary_tree():
     Prove that all ages are in the tree.
     """
     for key in AGE_DICT:
-        assert key in IN_ORDER_TR
+        if key > 0:
+            assert key in IN_ORDER_TR
 
 
 def test_oldest_under_eighty():
