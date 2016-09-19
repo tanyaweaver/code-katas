@@ -69,6 +69,7 @@ def internet_scraper(sym):
                             'Api/v2/Quote/json?symbol=' + sym)
     if response.status_code == 200:
         entries = {key: value for key, value in response.json().items()}
+    print('Current stock price from Nasdaq: ')
     print(entries['Name'], entries['LastPrice'])
 
 
@@ -91,6 +92,6 @@ def ages_of_two(age):
 
 
 if __name__ == '__main__':
-    ages_of_two(70)
+    ages_of_two(80)
     internet_scraper('NKE')
     internet_scraper('FB')
