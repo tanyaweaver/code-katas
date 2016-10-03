@@ -12,13 +12,15 @@ class Autocomplete(object):
         self._trie = Trie(iterable=vocabulary)
         self.max_completions = max_completions
 
-    def autocomplete(self, token):
+    def autocomplete(self, token=None):
+        """Return list of autocomplete suggestions, based on vocabulary."""
         result = []
         counter = 0
-        for x in self._trie.traversal(token[0]):
-            if counter < self.max_completions:
-                if x.startswith(token):
-                    result.append(x)
-                    counter += 1
+        if token and isinstance(token, type('abc')):
+            for x in self._trie.traversal(token[0]):
+                if counter < self.max_completions:
+                    if x.startswith(token):
+                        result.append(x)
+                        counter += 1
         return result
     __call__ = autocomplete
