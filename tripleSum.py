@@ -17,6 +17,14 @@ def tripleSum(x, a):
     return False
 
 
+def tripletSum(x, a):
+    from itertools import combinations
+    for e in combinations(a, 3):
+        if sum(e) == x:
+            return True
+    return False
+
+
 if __name__ == '__main__':
     x = 15
     a = [14, 1, 2, 3, 8, 15, 3]
