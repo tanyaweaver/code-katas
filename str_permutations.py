@@ -1,4 +1,6 @@
 def str_permutation(string):
+    if not string:
+        return []
     all_perm = set()
     all_perm = helper_perm(string, 0, len(string)-1, all_perm)
     result = list(all_perm)
@@ -25,4 +27,6 @@ def helper_perm(string, i, n, all_perm):
 if __name__ == '__main__':
     string = 'ABC'
     string = 'AAB'
+    string = ''
+    string = None
     print str_permutation(string)
