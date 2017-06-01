@@ -12,7 +12,6 @@ def compare_strings(s1, s2):
 
 
 def regex_matching(pattern, test):
-    # import pdb; pdb.set_trace()
     match = False
     if pattern[0] == '^' and pattern[-1] == '$':
         match = compare_strings(pattern[1:-1], test)
