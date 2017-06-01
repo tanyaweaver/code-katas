@@ -2,7 +2,6 @@ from collections import defaultdict
 
 
 def dna_repeats(s):
-    import pdb; pdb.set_trace()
     result = []
     if len(s) < 10:
         return result
@@ -14,8 +13,4 @@ def dna_repeats(s):
                 result.append(sequence)
         else:
             d_.add(sequence)
-    return result
-
-
-string = 'aaaaaaaaaaa'
-dna_repeats(string)
+    return sorted(result)
