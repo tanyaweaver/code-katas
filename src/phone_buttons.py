@@ -17,6 +17,7 @@ def phone_buttons(numbers):
     }
     letters = [reference[x] for x in numbers]
     return sorted(''.join(a) for a in product(*letters))
+    # Solution below is without itertools.product
     # cur_list = list(reference[numbers[0]])
     # for number in numbers[1:]:
     #     extra_list = []
