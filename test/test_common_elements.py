@@ -1,5 +1,7 @@
 import pytest
-from src.common_elements import common_elements1
+from src.common_elements import (common_elements1,
+                                 common_elements2,
+                                 common_elements3)
 
 
 TEST = [
@@ -21,4 +23,12 @@ def test_common_elements1(l1, l2, result):
 
 @pytest.mark.parametrize('l1, l2, result', TEST)
 def test_common_elements2(l1, l2, result):
-    assert common_elements1(l1, l2) == result
+    assert common_elements2(l1, l2) == result
+
+
+@pytest.mark.parametrize('l1, l2, result', TEST)
+def test_common_elements3(l1, l2, result):
+    if l1 and l2:
+        l1.sort()
+        l2.sort()
+    assert common_elements3(l1, l2) == result
