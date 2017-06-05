@@ -19,6 +19,18 @@ TEST = [
     ([1, 2], 3.6, [1, 2])
 ]
 
+REVERSE = [
+    ([1, 2, 3, 4], [4, 3, 2, 1]),
+    ([], [])
+]
+
+
+@pytest.mark.parametrize('l, reversed_l', REVERSE)
+def test_reverse(l, reversed_l):
+    llist = Llist(l)
+    llist.reverse()
+    assert llist.print_list() == reversed_l
+
 
 @pytest.mark.parametrize('l, result', LIST)
 def test_list_add_print(l, result):

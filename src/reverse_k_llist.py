@@ -53,3 +53,13 @@ class Llist(object):
                 group_first = cur
             else:
                 break
+
+    def reverse(self):
+        prev = None
+        cur = self.head
+        while cur:
+            next_ = cur.next
+            cur.next = prev
+            prev = cur
+            cur = next_
+        self.head = prev
