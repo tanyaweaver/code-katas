@@ -34,7 +34,7 @@ class Llist(object):
         counter, round_ = 0, 0
         prev_last = None
         group_first = self.head
-        while cur:
+        while cur and isinstance(k, int) and k > 0:
             while cur.next and counter < k - 1:
                 node_to_move = cur.next
                 cur.next = cur.next.next
