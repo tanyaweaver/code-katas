@@ -1,4 +1,4 @@
-from collections import defaultdict
+from collections import defaultdict, Counter
 
 
 def anagrams1(s1, s2):
@@ -19,3 +19,9 @@ def anagrams2(s1, s2):
     if not s1 or not s2:
         return False
     return sorted(s1) == sorted(s2)
+
+
+def anagrams3(s1, s2):
+    if not s1 or not s2:
+        return False
+    return Counter(s1) == Counter(s2)
